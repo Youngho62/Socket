@@ -1,5 +1,7 @@
 # Socket기능명세서
 
+서버와 클라이언트간에 어떤 문자열이든 전송이 가능하게 구현
+
 ## 1. Socket Interface
 
 클라이언트와 서버 클래스의 유지와 수정이 쉽게 인터페이스를 상속받아 구현할 수 있게 구성했다.
@@ -88,7 +90,7 @@ receiveMsg.read(bytes, 0, bytes.length);
 String msg = new String(bytes);
 ```
 
-## 3. CLinet Socket Class
+## 3. Clinet Socket Class
 
 클라이언트는 byte배열의 크기를 미리 상수로 고정한다. 
 ```java 

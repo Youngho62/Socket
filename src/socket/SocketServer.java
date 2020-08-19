@@ -2,10 +2,12 @@ package socket;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 import service.ServerSocketService;
 
@@ -16,10 +18,13 @@ public class SocketServer implements ServerSocketService{
 	@Override
 	public void run() {
 		ServerSocket server;
+		Scanner scan = new Scanner(System.in);
+		System.out.print("포트번호: ");
+		int port = scan.nextInt();
 		try{
 			//서버소켓을 생성하고 주소와 포트번호를 바인딩한다.
 			server = new ServerSocket();
-			InetSocketAddress address = new InetSocketAddress("0.0.0.0",9000);
+			InetSocketAddress address = new InetSocketAddress("0.0.0.0",port);
 			server.bind(address);
 
 			// 서버를 시작하자마자 콘솔에 나타나는 메시지
@@ -63,13 +68,12 @@ public class SocketServer implements ServerSocketService{
 	public boolean receive(InputStream receiveMsg, Socket client){
 		byte[] bytes = new byte[BUFFER_SIZE];
 		try {
-			receiveMsg.read(bytes, 0, bytes.length);
-			String msg = new String(bytes);
-			System.out.println("["+client.getRemoteSocketAddress().toString()+"]> "+msg);
-			if ("exit".equals(msg)) {
-				return false;
-			}
+			ObjectInputStream receiveObj = new ObjectInputStream(receiveMsg);
+			Object obj = receiveObj.readObject();
+			System.out.println("["+client.getRemoteSocketAddress().toString()+"]> "+obj);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 

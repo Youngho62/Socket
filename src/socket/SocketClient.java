@@ -1,13 +1,16 @@
 package socket;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
+import object.User;
 import service.ClientSocketService;
 
 public class SocketClient implements ClientSocketService{
@@ -20,11 +23,13 @@ public class SocketClient implements ClientSocketService{
 		Scanner scan = new Scanner(System.in);
 		System.out.print("IP주소: ");
 		String hostname = scan.nextLine();
+		System.out.print("포트번호: ");
+		int port = scan.nextInt();
 
 		try {
 			//입력받은 IP와 포트번호를 소켓에 넣고 서버와 연결에 시도한다.
 			Socket client = new Socket();
-			InetSocketAddress address = new InetSocketAddress(hostname, 9000);
+			InetSocketAddress address = new InetSocketAddress(hostname, port);
 			client.connect(address);
 			try {
 				// OutputStream과 InputStream를 받는다.
@@ -52,15 +57,15 @@ public class SocketClient implements ClientSocketService{
 	//서버에서 받은 바이트 메시지를 String으로 변환해 콘솔에 출력해주는 메소드
 	@Override
 	public void receive(InputStream receiveMsg) {
-			try {
-				byte[] bytes = new byte[BUFFER_SIZE];
-				receiveMsg.read(bytes, 0, bytes.length);
-				String msg = new String(bytes);
-				System.out.println(msg);
+		try {
+			byte[] bytes = new byte[BUFFER_SIZE];
+			receiveMsg.read(bytes, 0, bytes.length);
+			String msg = new String(bytes);
+			System.out.println(msg);
 
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	//메시지를 바이트로 변환해 서버에 전송해주는 메소드
@@ -68,11 +73,16 @@ public class SocketClient implements ClientSocketService{
 	public boolean send(OutputStream sendMsg, Socket client) {
 		try {
 			Scanner scan = new Scanner(System.in);
+
+			ObjectOutputStream sendObj = new ObjectOutputStream(sendMsg);			
+
+			
+			User user = new User("yh",0,"010-1234-1234");
+			sendObj.writeObject(user);
+			sendObj.flush();
+
 			System.out.print("["+client.getRemoteSocketAddress().toString()+"]> ");
 			String msg = scan.nextLine();
-			byte[] bytes = msg.getBytes();
-			sendMsg.write(bytes);
-			sendMsg.flush();
 			if ("exit".equals(msg)) {
 				return false;
 			}

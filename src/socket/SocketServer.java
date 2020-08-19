@@ -14,17 +14,22 @@ import service.ServerSocketService;
 public class SocketServer implements ServerSocketService{
 	// 버퍼 사이즈 설정
 	private final static int BUFFER_SIZE = 1024;
-
+	
+	private ServerSocket server;
+	private Socket client;
+	private InetSocketAddress address;
+	private OutputStream sendMsg;
+	private InputStream receiveMsg;
+	
+	Scanner scan = new Scanner(System.in);
 	@Override
 	public void run() {
-		ServerSocket server;
-		Scanner scan = new Scanner(System.in);
 		System.out.print("포트번호: ");
 		int port = scan.nextInt();
 		try{
 			//서버소켓을 생성하고 주소와 포트번호를 바인딩한다.
 			server = new ServerSocket();
-			InetSocketAddress address = new InetSocketAddress("0.0.0.0",port);
+			address = new InetSocketAddress("0.0.0.0",port);
 			server.bind(address);
 
 			// 서버를 시작하자마자 콘솔에 나타나는 메시지
@@ -35,25 +40,25 @@ public class SocketServer implements ServerSocketService{
 
 			while (true) {
 				//클라이언트와 서버간에 접속 시도
-				Socket client = server.accept();
+				client = server.accept();
 				//접속이 완료되면 콘솔에 메시지 출력
 				System.out.println("클라이언트와 연결 [" + client.getRemoteSocketAddress().toString()+"]");
 
 				// OutputStream과 InputStream를 받는다.
-				OutputStream sendMsg = client.getOutputStream();
-				InputStream receiveMsg = client.getInputStream();
+				sendMsg = client.getOutputStream();
+				receiveMsg = client.getInputStream();
 
 				//클라이언트에 메시지 전송해주는 메소드 (1=접속 성공시)
-				send(1,sendMsg);
+				send(1);
 
 				while (true) {
 					//클라이언트로부터 메시지를 수신받는 메소드, exit 문자열을 받으면 false 리턴
-					if(!receive(receiveMsg, client)) {
+					if(!receive()) {
 						break;
 					};
 
 					//클라이언트에 메시지 전송해주는 메소드(2=메시지 수신 완료시)
-					send(2,sendMsg);
+					send(2);
 				}
 				//연결이 해제되면 콘솔에 메시지 출력
 				System.out.println("클라이언트 연결 해제 =["+client.getRemoteSocketAddress().toString()+"]");
@@ -65,7 +70,7 @@ public class SocketServer implements ServerSocketService{
 
 	//클라이언트에서 받은 바이트 메시지를 String으로 변환해 콘솔에 출력해주는 메소드
 	@Override
-	public boolean receive(InputStream receiveMsg, Socket client){
+	public boolean receive(){
 		byte[] bytes = new byte[BUFFER_SIZE];
 		try {
 			ObjectInputStream receiveObj = new ObjectInputStream(receiveMsg);
@@ -82,7 +87,7 @@ public class SocketServer implements ServerSocketService{
 
 	//메시지를 바이트로 변환해 클라이언트에 전송해주는 메소드
 	@Override
-	public void send(int num, OutputStream sendMsg){
+	public void send(int num){
 		String msg;
 		byte[] bytes;
 		try {

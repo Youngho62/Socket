@@ -16,7 +16,9 @@ public interface SocketService {
 }
 ```
 
-ServerSocketService 인터페이스의 receive 메소드는 
+ServerSocketService를 구현할 서버클래스는 
+receive 메소드에 InputStream을 이용하여 데이터를 받고 받은 데이터가("exit")이면 false를 반환
+send 메소드에 OutputStream과 num(1:접속성공메시지, 2:전송성공메시지)를 입력받고 클라이언트에 전송
 ```java
 //SocketService를 상속 받는 ServerSocketService 인터페이스
 public interface ServerSocketService extends SocketService{
@@ -24,7 +26,9 @@ public interface ServerSocketService extends SocketService{
 	public void send(int num,OutputStream sendMsg);
 }
 ```
-
+ClientSocketService를 구현할 서버클래스는 
+send 메소드에 OutputStream을 이용하여 데이터를 받고 받은 데이터가("exit")이면 false를 반환
+receive메소드에 InputStream를 받고 서버에서 받은 데이터를 출력
 ```java
 //SocketService를 상속 받는 ClientSocketService 인터페이스
 public interface ClientSocketService extends SocketService{
@@ -37,6 +41,7 @@ public interface ClientSocketService extends SocketService{
 
 서버 소켓은 클라이언트로부터 바이트 데이터를 받고 성공적으로 데이터를 받았으면 성공 메시지를 다시 보낸다.
 그리고 언제든 클라이언트와 연결이 가능하게 접속 대기를 한다.
+
 
 ## 3. Client Socket
 

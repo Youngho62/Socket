@@ -4,13 +4,13 @@ interface SocketService{
 }
 
 interface ServerSocketService extends SocketService{
-    receive(InputStream receiveMsg, Socket client) : boolean
-    send(int num,OutputStream sendMsg) : void
+    receive(InputStream, Socket) : boolean
+    send(int,OutputStream) : void
 }
 
 interface ClientSocketService extends SocketService{
-	receive(InputStream receiveMsg) : void
-	send(OutputStream sendMsg, Socket client) :boolean
+	receive(InputStream) : void
+	send(OutputStream, Socket) :boolean
 }
 
 class SocketClient implements ClientSocketService{
@@ -32,3 +32,7 @@ class SocketMain{
 SocketMain --* SocketServer
 SocketMain --* SocketClient
 @enduml
+
+
+========================================================================
+<img src="./img/ClassDiagram/ClassDiagram.png">

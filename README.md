@@ -4,4 +4,4 @@
 
 ### 문자열을 바이트로 변환 후, 데이터를 주고 받는 기능
 
-### [해당 프로젝트 클래스다이어그램](./z.doc/ClassDiagram.md)
+### [해당 프로젝트 클래스다이어그램](./z.doc/ClassDiagram/ClassDiagram.md)

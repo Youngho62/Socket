@@ -2,8 +2,8 @@ package service;
 /**
  * 
  * <pre>
- * Class Name : SocketService
- * Description : 서버와 클라이언트의 상위 인터페이스
+ * Class Name : SocketServerService
+ * Description : SocketService를 상속 받는 ServerSocketService 인터페이스
  * Supplements : Created in 2020. 8. 21
  *
  * Modification Information
@@ -20,9 +20,7 @@ package service;
  * </pre>
  */
 
-public interface SocketService {
-	// 버퍼 사이즈 설정
-	final static int HEADER_SIZE = 1024; // 1kb
-	final static int FILE_BUFFER_SIZE = 8*1024; //8kb 
-	public void run();
+public interface SocketServerService extends SocketService{
+	public boolean receive();
+	public void send(int num);
 }

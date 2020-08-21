@@ -2,13 +2,13 @@ package object;
 
 import java.io.Serializable;
 
-public class File implements Serializable {
+public class FileObj implements Serializable {
 
 	private String fileName;
 	private long size;
 	private String uuid;
 	
-	public File(String fileName, long size, String uuid) {
+	public FileObj(String fileName, long size, String uuid) {
 		super();
 		this.fileName = fileName;
 		this.size = size;

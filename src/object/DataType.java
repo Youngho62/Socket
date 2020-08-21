@@ -1,9 +1,9 @@
-package service;
+package object;
 /**
  * 
  * <pre>
- * Class Name : SocketService
- * Description : 서버와 클라이언트의 상위 인터페이스
+ * Class Name : DataType
+ * Description : Header값의 멤버변수로 데이터타입을 나타내는 열거형 상수 
  * Supplements : Created in 2020. 8. 21
  *
  * Modification Information
@@ -19,10 +19,6 @@ package service;
  * Copyright (c) ABrain.  All rights reserved.
  * </pre>
  */
-
-public interface SocketService {
-	// 버퍼 사이즈 설정
-	final static int HEADER_SIZE = 1024; // 1kb
-	final static int FILE_BUFFER_SIZE = 8*1024; //8kb 
-	public void run();
+public enum DataType {
+	TYPE_STRING,TYPE_OBJECT,TYPE_FILE;
 }

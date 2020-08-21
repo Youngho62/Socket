@@ -1,7 +1,25 @@
 package socket;
-
 import java.util.Scanner;
-
+/**
+ * 
+ * <pre>
+ * Class Name : SocketMain
+ * Description : 소켓프로그램을 실행시키는 메인 클래스
+ * Supplements : Created in 2020. 8. 21
+ *
+ * Modification Information
+ *
+ * Date          By               Description
+ * ------------- -----------      ----------------------------------------------
+ * 2020. 8. 21  Yeongho        First Commit.
+ *
+ * @since 2020
+ * @version v1.0
+ * @author Yeongho
+ *
+ * Copyright (c) ABrain.  All rights reserved.
+ * </pre>
+ */
 public class SocketMain{
 	public static void main(String[] args) {
 		int num = choiceSC();

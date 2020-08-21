@@ -21,6 +21,8 @@ class SocketClient implements SocketClientService{
     - sendMsg : OutputStream
     - receiveMsg : InputStream
       scan : Scanner
+
+      convertToBytes(Object) : byte[]
 }
 
 class SocketServer implements SocketServerService{
@@ -30,6 +32,8 @@ class SocketServer implements SocketServerService{
     - sendMsg : OutputStream
     - receiveMsg : InputStream
       scan : Scanner
+
+     convertFromBytes(byte[]) : Object
 }
 
 class SocketMain{
@@ -40,10 +44,11 @@ class SocketMain{
     {static} choiceSC() : int
 }
 
-SocketMain ---* SocketServer
-SocketMain ---* SocketClient
+SocketMain --* SocketServer
+SocketMain --* SocketClient
 @enduml
 
 
+
 ---
-<img src="../img/ClassDiagram/ver2_1.png">
+<img src="../img/ClassDiagram/ver3.png">

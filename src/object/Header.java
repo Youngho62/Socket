@@ -29,6 +29,11 @@ public class Header implements Serializable{
 	private String fileName;
 	private String fileType;
 	
+	public Header(DataType dataType) {
+		super();
+		this.dataType = dataType;
+	}
+	
 	public Header(long dataSize, DataType dataType) {
 		super();
 		this.dataSize = dataSize;

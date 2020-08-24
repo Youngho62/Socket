@@ -20,5 +20,5 @@ package object;
  * </pre>
  */
 public enum DataType {
-	TYPE_STRING,TYPE_OBJECT,TYPE_FILE;
+	CONNECTION_START,TYPE_STRING,TYPE_OBJECT,TYPE_FILE;
 }
